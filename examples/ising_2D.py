@@ -6,8 +6,9 @@ colorArray = ['k','r','b','g']
 
 def ising_energy(spins,J=1):
     energy = 0
-    for i in range(len(spins)):
-        for j in range(len(spins)):
+    M, N = spins.shape
+    for i in range(M):
+        for j in range(N):
             spin_domain = spins[i,j]
             neighbors = spins[(i+1)%N, j] + spins[i,(j+1)%N] + spins[(i-1)%N,j] + spins[i,(j-1)%N]
             energy += neighbors*spin_domain
@@ -50,7 +51,7 @@ def metropolis(temperature=1,J=1,boltz_constant=1,N=10,N_steps=10000,burn_in=100
             mags.append(mag)
     return en,mags
 
-N = 10
+N = 20
 
 fig, ax = plt.subplots(2,1,figsize=(8,16))
 for index,t in enumerate([1,2.27,5]):
