@@ -4,15 +4,14 @@ import matplotlib.pyplot as plt
 
 colorArray = ['k','r','b','g']
 
-def ising_energy(latt,J=1):
+def ising_energy(spins,J=1):
     energy = 0
-    M, N = latt.shape
-    for i in range(M):
-        for j in range(N):
-            spin = latt[i,j]
-            neighbors = latt[(i+1)%N, j] + latt[i,(j+1)%N] + latt[(i-1)%N,j] + latt[i,(j-1)%N]
-            energy += neighbors*spin # Each neighbor gives energy 1.0
-    return -J*energy/2. # Each par counted twice
+    for i in range(len(spins)):
+        for j in range(len(spins)):
+            spin_domain = spins[i,j]
+            neighbors = spins[(i+1)%N, j] + spins[i,(j+1)%N] + spins[(i-1)%N,j] + spins[i,(j-1)%N]
+            energy += neighbors*spin_domain
+    return -energy/2. # double counting
 
 
 def ising_magnetization(spins):
@@ -22,7 +21,7 @@ def boltz_factor(e_final=0.0,e_initial = 1.0,k=1,T=1):
     exponent = -(e_final-e_initial) / k / T
     return np.exp(exponent)
 
-def metropolis(temperature=1,J=1,boltz_constant=1,N=100,N_steps=10000,burn_in=1000):
+def metropolis(temperature=1,J=1,boltz_constant=1,N=10,N_steps=10000,burn_in=1000):
     spins = random.choice([-1.0,1.0],size=(N,N))
     energy = ising_energy(spins,J=J)
     en = []
@@ -55,14 +54,13 @@ N = 10
 
 fig, ax = plt.subplots(2,1,figsize=(8,16))
 for index,t in enumerate([1,2.27,5]):
-    en,mags = metropolis(N_steps=10000,temperature=t)
+    en,mags = metropolis(N_steps=1000,temperature=t)
     # en *= 2**(index+1)
     # mags *= 2**(index*1)
     ax[0].plot(en,c=colorArray[index])
     ax[1].plot(mags,c=colorArray[index])
 
 # ax[0].set_ylim(-2,0)
-
 # ax[1].set_ylim(-0.1,1.1)
 plt.show()
 
