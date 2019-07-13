@@ -67,7 +67,7 @@ temps = np.arange(0.1,5.0,0.1)
 energies = np.zeros(temps.size)
 magnetizations = np.zeros(temps.size)
 for index,t in enumerate(temps):
-    en,mags = metropolis(N_steps=500000,temperature=t,N_grid=N,save_chain=False)
+    en,mags = metropolis(N_steps=1500000,temperature=t,N_grid=N,save_chain=False)
     energies[index] = en
     magnetizations[index] = np.abs(mags)
 ax[0].plot(temps,energies,c='k')
