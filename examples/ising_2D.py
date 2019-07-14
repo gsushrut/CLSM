@@ -1,9 +1,10 @@
 import numpy as np
 import numpy.random as random
 import matplotlib.pyplot as plt
+import time as time
 
 plt.rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
-plt.rc('text', usetex=True)
+#plt.rc('text', usetex=True)
 plt.rc('font', family='serif', size=22)
 params = {'legend.fontsize': 22}
 plt.rcParams.update(params)
@@ -84,7 +85,10 @@ heat_capacities = np.zeros(temps.size)
 susceptibilities = np.zeros(temps.size)
 
 for index,t in enumerate(temps):
-    en,mags,en2,mags2 = metropolis(N_steps=7500000,temperature=t,N_grid=N,save_chain=False,burn_in=10000)
+    start = time.time()
+    en,mags,en2,mags2 = metropolis(N_steps=125000,temperature=t,N_grid=N,save_chain=False,burn_in=10000)
+    final = time.time()
+    print("{1:d}/{2:d}, {0:2.2f} seconds".format(final-start, index, len(temps)))
     energies[index] = en
     magnetizations[index] = np.abs(mags)
     heat_capacities[index] = heat_capacity_calc(en,en2,t)
@@ -93,35 +97,33 @@ for index,t in enumerate(temps):
 
 ax[0][0].plot(temps,energies,c='k')
 ax[0][1].plot(temps,magnetizations,c='k')
-ax[1][0].plot(temps,heat_capacities,c='k')
-ax[1][1].plot(temps,susceptibilities,c='k')
+
+
+ax[1][0].plot(temps,heat_capacities*100,c='k')
+ax[1][1].plot(temps,susceptibilities*100,c='k')
 
 ax[0][0].set_ylim(-2.1,0.1)
 ax[0][0].set_yticks([-2,-1,0])
 ax[0][0].set_ylabel("E [arb]")
 
 ax[0][1].set_ylim(-0.1,1.1)
+ax[0][1].set_yticks([0,1])
 ax[0][1].set_ylabel("M [arb]")
-ax[0][1].set_xlabel("Temperature [arb]")
+ax[1][0].set_xlabel("Temperature [arb]")
 
 
 #ticks,lim
-ax[1][0].set_ylabel("$C_{V}$ [arb]")
+ax[1][0].set_ylabel("$C_{V}$ [100 arb]")
+ax[1][0].set_yticks([0,1,2,3])
+ax[1][0].set_xticks([1,2,3])
 
 #ticks, lim
-ax[1][1].set_ylabel("$\chi$ [arb]")
+ax[1][1].set_ylabel("$\chi$ [100 arb]")
+ax[1][1].set_xlabel("Temperature [arb]")
+#ax[1][1].set_yticks([0,1,2,3])
 
+ax[1][1].set_xticks([1,2,3])
 
+fig.subplots_adjust(hspace=0.75,wspace=0.75)
 plt.show()
-fig.savefig("biggest_burn_in_plot.pdf",bbox_inches='tight')
-
-
-
-
-
-
-
-
-
-
-    # print
+fig.savefig("plot.pdf",bbox_inches='tight')
