@@ -1,0 +1,321 @@
+% wpindent.sty -- WordPerfect-style paragraph formatting
+%
+% Mark Caprio
+% orig. 7/27/03
+% from code first written ~11/02
+% 9/6/12 (mac) -- fix interchanged roles of leftindentlist[*] and doubleindentlist[*]
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{wpindent}[2004/04/09 v1.0+ (M. A. Caprio)]
+
+% length \wpindent -- default indent
+
+\newlength{\wpindent}
+\setlength{\wpindent}{0.375in}
+
+% leftindent -- left indent, no paragraph spacing
+%  Arguments: [leftmargin=0.375in]
+%        left margin is to start of text body
+\newenvironment{leftindent}[1][\wpindent]
+  {
+    \begin{list}{}{\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+                   \setlength{\leftmargin}{#1}\setlength{\rightmargin}{0pt}}
+    \item[]
+  }
+  {
+    \end{list}
+  }
+
+% rightindent -- right indent, no paragraph spacing
+%  Arguments: [rightmargin=\wpindent]
+%        left margin is to start of text body
+\newenvironment{rightindent}[1][\wpindent]
+  {
+    \begin{list}{}{\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+                   \setlength{\leftmargin}{0pt}\setlength{\rightmargin}{#1}}
+    \item[]
+  }
+  {
+    \end{list}
+  }
+
+% doubleindent -- double indent (somewhat like quote), no paragraph spacing
+%  Arguments: [leftmargin=\wpindent]
+%        left margin is to start of text body
+\newenvironment{doubleindent}[1][\wpindent]
+  {
+    \begin{list}{}{\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+                   \setlength{\leftmargin}{#1}\setlength{\rightmargin}{#1}}
+    \item[]
+  }
+  {
+    \end{list}
+  }
+
+% hangingindent -- hanging indent, no paragraph spacing
+%  Arguments: [leftmargin=\wpindent]
+%        left margin is to start of text body
+\newenvironment{hangingindent}[1][\wpindent]
+  {
+    \begin{list}{}{\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+                   \setlength{\leftmargin}{#1}\setlength{\itemindent}{-\leftmargin}
+                   \setlength{\rightmargin}{0pt}}  
+    \item[]
+  }
+  {
+    \end{list}
+  }
+
+% enumeratelist -- enumeration list with customizable spacing
+%  Arguments: [leftmargin=\wpindent]{parsep}
+%        left margin is to start of text body
+%        parsep is between items and paragraphs within an item
+% e.g., parsep for dissertation was 0.37\baselineskip to emulate
+% a Berkeley pseudo-doublespace between list items
+% Note: plain version has \topsep equal to interitem spacing, starred
+%   version has no \topsep
+% resuming counter across lists
+
+%   The "ending" number of each sublist will be saved in counter
+%   last-item and used (plus one) as the starting number of the next sublist.
+\newcounter{enumeratelistctr}
+\newcounter{enumeratelistlastctr}  
+\setcounter{enumeratelistlastctr}{0}
+
+\newcommand{\labelenumeratelist}{\arabic{enumeratelistctr}.} 
+% but not presently overridable, not even with \noexpand in list definition below
+% ah, need to turn this into a \def
+
+% \resumeenumeratelist -- continue numbering from end of last enumeratelist
+\newcommand{\resumeenumeratelist}{\setcounter{enumeratelistctr}{\value{enumeratelistlastctr}}}
+
+\newenvironment{enumeratelist}[2][\wpindent]
+  {
+    \begin{list}
+          {\labelenumeratelist}
+          {\setlength{\topsep}{#2}\setlength{\partopsep}{0pt}
+           \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+           \setlength{\leftmargin}{#1}\setlength{\rightmargin}{0pt}
+           \setlength{\labelsep}{0.5em}
+           \setlength{\itemindent}{0pt}
+           \setlength{\labelwidth}{#1}\addtolength{\labelwidth}{-\labelsep}
+           \usecounter{enumeratelistctr}
+          }
+  }
+  {
+    \setcounter{enumeratelistlastctr}{\value{enumeratelistctr}}
+    \end{list}
+  }
+
+% legacy -- no \topsep
+\newenvironment{enumeratelist*}[2][\wpindent]
+  {
+    \begin{list}
+          {\arabic{enumeratelistctr}.}
+          {\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+           \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+           \setlength{\leftmargin}{#1}\setlength{\rightmargin}{0pt}
+           \setlength{\labelsep}{0.5em}
+           \setlength{\itemindent}{0pt}
+           \setlength{\labelwidth}{#1}\addtolength{\labelwidth}{-\labelsep}
+           \usecounter{enumeratelistctr}
+          }
+  }
+  {
+    \setcounter{enumeratelistlastctr}{\value{enumeratelistctr}}
+    \end{list}
+  }
+
+
+% leftindentlist -- list of left-indented items with customizable spacing,
+%                     may be used as alternative to description list
+%  Arguments: [leftmargin=\wpindent]{parsep}
+%        left margin is to start of text body
+%        parsep is between items and paragraphs within an item
+
+\newenvironment{leftindentlist}[2][\wpindent]
+  {
+    \begin{list}
+          {}
+          {\setlength{\topsep}{#2}\setlength{\partopsep}{0pt}
+           \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+           \setlength{\leftmargin}{#1}\setlength{\rightmargin}{0pt}
+           \setlength{\labelsep}{0.5em}
+           \setlength{\itemindent}{0pt}
+           \setlength{\labelwidth}{0pt}
+          }
+  }
+  {
+    \end{list}
+  }
+
+% legacy -- no \topsep
+\newenvironment{leftindentlist*}[2][\wpindent]
+  {
+    \begin{list}
+          {}
+          {\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+           \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+           \setlength{\leftmargin}{#1}\setlength{\rightmargin}{0pt}
+           \setlength{\labelsep}{0.5em}
+           \setlength{\itemindent}{0pt}
+           \setlength{\labelwidth}{0pt}
+          }
+  }
+  {
+    \end{list}
+  }
+
+% noindentlist -- list of unindented items with customizable spacing,
+%  Arguments: [leftmargin=0]{parsep}
+%        parsep is between items and paragraphs within an item
+%        identical to leftindentlist, but with different default indent 
+
+\newenvironment{noindentlist}[2][0\wpindent]
+  {
+    \begin{list}
+          {}
+          {\setlength{\topsep}{#2}\setlength{\partopsep}{0pt}
+           \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+           \setlength{\leftmargin}{#1}\setlength{\rightmargin}{#1}
+           \setlength{\labelsep}{0.5em}
+           \setlength{\itemindent}{0pt}
+           \setlength{\labelwidth}{0pt}
+          }
+  }
+  {
+    \end{list}
+  }
+
+% legacy -- no \topsep
+\newenvironment{noindentlist*}[2][0\wpindent]
+  {
+    \begin{list}
+          {}
+          {\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+           \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+           \setlength{\leftmargin}{#1}\setlength{\rightmargin}{#1}
+           \setlength{\labelsep}{0.5em}
+           \setlength{\itemindent}{0pt}
+           \setlength{\labelwidth}{0pt}
+          }
+  }
+  {
+    \end{list}
+  }
+
+
+% doubleindentlist -- list of double-indented items with customizable spacing,
+%                     may be used as alternative to description list
+%  Arguments: [leftmargin=\wpindent]{parsep}
+%        left margin is to start of text body
+%        parsep is between items and paragraphs within an item
+
+\newenvironment{doubleindentlist}[2][\wpindent]
+  {
+    \begin{list}
+          {}
+          {\setlength{\topsep}{#2}\setlength{\partopsep}{0pt}
+           \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+           \setlength{\leftmargin}{#1}\setlength{\rightmargin}{#1}
+           \setlength{\labelsep}{0.5em}
+           \setlength{\itemindent}{0pt}
+           \setlength{\labelwidth}{0pt}
+          }
+  }
+  {
+    \end{list}
+  }
+
+% legacy -- no \topsep
+\newenvironment{doubleindentlist*}[2][\wpindent]
+  {
+    \begin{list}
+          {}
+          {\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+           \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+           \setlength{\leftmargin}{#1}\setlength{\rightmargin}{#1}
+           \setlength{\labelsep}{0.5em}
+           \setlength{\itemindent}{0pt}
+           \setlength{\labelwidth}{0pt}
+          }
+  }
+  {
+    \end{list}
+  }
+
+% hangingindentlist -- list of hanging-indented items with customizable spacing
+%  Arguments: [leftmargin=\wpindent]{parsep}
+%        left margin is to start of text body
+%        parsep is between items and paragraphs within an item
+
+\newenvironment{hangingindentlist}[2][\wpindent]
+  {
+    \begin{list}
+          {}
+          {\setlength{\topsep}{#2}\setlength{\partopsep}{0pt}
+           \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+           \setlength{\leftmargin}{#1}\setlength{\rightmargin}{0pt}
+           \setlength{\labelsep}{0.5em}
+           \setlength{\itemindent}{-\leftmargin} 
+           \setlength{\labelwidth}{0pt}
+          }
+  }
+  {
+    \end{list}
+  }
+
+
+% legacy -- no \topsep
+\newenvironment{hangingindentlist*}[2][\wpindent]
+  {
+    \begin{list}
+          {}
+          {\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+           \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+           \setlength{\leftmargin}{#1}\setlength{\rightmargin}{0pt}
+           \setlength{\labelsep}{0.5em}
+           \setlength{\itemindent}{-\leftmargin} 
+           \setlength{\labelwidth}{0pt}
+          }
+  }
+  {
+    \end{list}
+  }
+
+
+% ticklist -- tick-mark list, indented further than default so ticks line 
+% up with prior indented text 
+%  Arguments: [leftmargin=\wpindent]{parsep}{tickmark}
+%        left margin is to tick marks
+%        parsep is between items and paragraphs within an item
+\newenvironment{ticklist}[3][\wpindent]
+  {
+    \begin{list}{#3}{\setlength{\topsep}{#2}\setlength{\partopsep}{0pt}
+                   \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+                   \setlength{\labelsep}{0.5em}
+                   \setlength{\itemindent}{0pt}
+                   \settowidth{\labelwidth}{#3}
+                   \setlength{\leftmargin}{#1}\addtolength{\leftmargin}{\labelwidth}
+                       \addtolength{\leftmargin}{\labelsep}\setlength{\rightmargin}{0pt}
+                    }
+  }
+  {
+    \end{list}
+  }
+
+% legacy -- no \topsep
+\newenvironment{ticklist*}[3][\wpindent]
+  {
+    \begin{list}{#3}{\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+                   \setlength{\itemsep}{0pt}\setlength{\parsep}{#2}
+                   \setlength{\labelsep}{0.5em}
+                   \setlength{\itemindent}{0pt}
+                   \settowidth{\labelwidth}{#3}
+                   \setlength{\leftmargin}{#1}\addtolength{\leftmargin}{\labelwidth}
+                       \addtolength{\leftmargin}{\labelsep}\setlength{\rightmargin}{0pt}
+                    }
+  }
+  {
+    \end{list}
+  }

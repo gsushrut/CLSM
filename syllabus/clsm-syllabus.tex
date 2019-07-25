@@ -1,0 +1,397 @@
+\documentclass[12pt]{mcplain}
+\setlinespacing{0}
+\setparspacing{1}
+\setparindentation{0}
+\thispagestyle{empty}
+\geometry{vmargin=1in,hmargin=1in}
+
+\usepackage{hyperref}
+\usepackage{multicol}
+
+\usepackage{times}  % for PostScript fonts, needed to mix it and bf for sf
+
+%% \usepackage[draft]{draftmark}
+%% \draftmarksetup{mark=PRELIMINARY,scale=0.6,fontfamily=phv}
+
+
+
+
+\sloppy
+
+\usepackage{probset}
+\usepackage{syllabus}
+\usepackage{isotope}
+
+% watermark
+% \usepackage{background}
+% \backgroundsetup{contents={PRELIMINARY},color=black,opacity=0.15}
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% title block
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\syllabustitle{Computational Laboratory in Statistical Mechanics}
+\syllabussubtitle{PHYS ????? / Spring 2020 / 2 credits}
+
+\begin{multicols}{3}
+
+Sushrut Ghonge\\
+Office TBD\\
+sghonge@nd.edu
+
+\columnbreak
+Kevin Howard\\
+103 Nieuwland Science Hall\\
+khoward5@nd.edu
+
+\columnbreak
+
+Prof. Mark Caprio\\
+209 Nieuwland Science Hall\\
+mcaprio@nd.edu
+\end{multicols}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% logistics block
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\syllabusseparator
+
+\syllabussection{Laboratory meetings}
+
+\begin{leftindent}
+ Location/Time:TBD %Tuesday / Thursday, 2:00 PM -- 3:15 PM (Location: Jordan Hall of Science, Room 412)
+\end{leftindent}
+
+\syllabusseparatorpart{Description}
+
+\syllabussection{Why this course?}
+%
+% The physics problems you encounter in most courses can be solved with paper and
+% pencil. Physics problems in the real world, however, whether in research or
+% applications, typically cannot. While paper and pencil are still needed for
+% these problems, at some stage in the process it becomes essential to make use of
+% numerical methods of solution, and therefore computation.
+%
+% In the introductory-level Computational Methods in Physics course, you acquired
+% a basic foundation in the knowledge and skills needed for computational problem
+% solving.  You are now prepared to bring your newfound computational abilities to
+% your upper level courses.
+%
+% The present course, \textit{Computational Laboratory in Quantum Mechanics}, is a
+% computational laboratory companion to Quantum Mechanics~II.  You will hone your
+% computational skills by tackling realistic applications based on the physical
+% concepts you learn in your courses.  Conversely, you will use your computational
+% explorations to get a deeper, hands-on understanding of these same physical
+% concepts.
+
+
+
+\syllabussection{Course structure}
+
+
+This is a project-based course, built around independent readings, group
+meetings, and semi-independent work in loose collaboration with lab partners.
+The meetings will be very much in the spirit of research group meetings.  They
+will include: seminar-style discussion of readings in preparation for each
+project, brainstorming and outlining approaches for accomplishing the goals of
+the project, status updates and exchange of ideas as challenges arise, and
+sharing of results and insights after each project is completed.  A portion of
+each session will be open time dedicated to working on the current project, in a
+collaborative setting.  Scheduling will be flexible, as we determine the most
+efficient scheme for working on each stage of the project; in initial stages of
+a project, we will often spend more meeting time discussing and planning, while
+in later stages we will devote more time to development.
+
+\clearpage
+
+\syllabussection{What you have learned so far}
+
+From Computational Methods in Physics, you acquired a basic foundation in the
+three fundamental elements of computational problem solving:
+
+(1)~\textit{Programming}. You are now able to speak the language of the
+computer.  You are able to plan, code, and debug a programming project
+systematically and with confidence.  You are now accustomed to writing programs
+which don't merely ``work'' but which are well-structured, divided into logical
+subunits, and clearly documented.  Your programs are therefore straightforward
+to debug, and you write your code in a general way so that you can easily reuse
+and extend it as your scientific goals expand.
+
+(2)~\textit{Numerical methods}.  You have also developed proficiency with many
+of the numerical methods used for doing the calculations in scientific problems.
+Your initial introduction focused on rootfinding, numerical integration,
+integration of differential equations, evaluation of special functions, and an
+introduction to numerical linear algebra.  However, more important than the
+\textit{specific} numerical methods you learned in Computational Methods in
+Physics is the fact that you now have a general sense of the \textit{use and
+limitations} of numerical methods.  You have demonstrated that you can read
+about a new numerical algorithm on your own, implement code for this algorithm,
+and investigate the numerical errors (algorithmic and roundoff) and stability of
+the algorithm.
+
+(3)~\textit{Translation}. The least tangible, but arguably most important,
+aspect of solving a problem computationally is the step of translation. That is,
+how do we combine the various ingredients we learned above, to solve an actual
+problem? We must take a general physical framework (such as Newtonian mechanics
+or the Schr\"odinger equation) and translate this into a concrete set of
+algorithms and calculations, to be carried out numerically, for the given
+problem. Which equation or equations is most suitable for solution with the
+computer, and how can we best set about doing this? Computational problem
+solving, as with any problem solving, must largely be learned from examples and
+experience.  While you gained some initial exposure in Computational Methods in
+Physics, translation will be the focus of the Computational Laboratory in
+Statistical Mechanics.
+
+\syllabussection{What we will learn in this laboratory}
+
+\begin{leftindent}[0.5in]
+ \footnotesize
+ Computation is an integral part of modern science, and the ability to exploit
+ effectively the power offered by computers is therefore essential to a working
+ physicist.  The proper application of a computer to modeling physical systems
+ is far more than blind ``number crunching'', and the successful computational
+ physicist draws on a balanced mix of analytically soluble examples, physical
+ intuition, and numerical work to solve problems that are otherwise
+ intractable.~---~\textit{Steven E.~Koonin}
+\end{leftindent}
+%
+% We will move beyond the simple textbook case of the hydrogen atom, to see how
+% quantum mechanical methods are applied for realistic problems in atomic,
+% nuclear, or condensed matter physics. Some of the problems in this course will
+% help you to refine your understanding of the basic principles of quantum
+% mechanics (\textit{e.g.}, by studying the propagation of wave packets).  Others
+% will allow you to move beyond the few toy problems which can be solved
+% analytically, to more realistic problems of the type which occur in actual
+% research.  You will thereby develop a feel for how quantum mechanics is applied
+% in practice.  Indeed, many of the problem-solving approaches you learn in
+% Quantum Mechanics~II (such as the variational principle or the WKB
+% approximation) only come into their own (or even make any practical sense) when
+% they are applied numerically, as they will be in this computational laboratory.
+%
+% As a byproduct, you will continue to develop your proficiency in scientific
+% programming and numerical methods.  Depending on the choice of projects, you
+% will explore solution methods for partial differential equations and boundary
+% value problems, the computation of Fourier transforms, and the methods of
+% numerical linear algebra.  You will also have opportunities to further your
+% knowledge of programming methods (\textit{e.g.}, data structures and object
+% oriented programming) and to explore methods of graphical visualization.
+
+\syllabussection{Prerequisites/corequisites}
+
+
+%% \begin{leftindent}
+%% \textsf{Prerequisite:} Computational
+%% Methods in Physics (PHYS~20420)
+%% \\
+%% \textsf{Prerequisite/corequisite:} Quantum Mechanics II (PHYS~40454)
+%% \end{leftindent}
+
+% \begin{leftindent}
+%  Computational
+%  Methods in Physics (PHYS~20420) must have been completed previously;
+%  Quantum Mechanics II (PHYS~40454) may be taken concurrently or may have been taken previously.
+% \end{leftindent}
+
+
+
+\syllabusseparatorpart{Organization}
+
+\syllabussection{Resources}
+%
+% Our aim is to understand both the quantum mechanics and the computational
+% approaches in depth, at a level which prepares you for research-grade work.  The
+% laboratory projects will be at roughly the level of and in the same spirit as
+% those in Koonin's Caltech computational physics course.  Our principal resources
+% will be:
+%
+% \begin{leftindentlist*}{\baselineskip}
+%   \item Paolo Giannozzi, \textit{Numerical Methods in Quantum Mechanics},
+%   lecture notes, University of Udine (2016).
+%
+%   \item Morten Hjorth-Jensen, \textit{Computational Physics}, lecture notes,
+%   University of Oslo (2015).
+%  \url{https://github.com/CompPhysics/ComputationalPhysics/tree/master/doc/Lectures}
+% \end{leftindentlist*}
+%
+% We will also draw upon several quantum mechanics textbooks, especially (on reserve):
+%
+% \begin{leftindentlist*}{\baselineskip}
+%
+%   \item Mark Newman, \textit{Computational Physics} (Independently published) (2012)
+%
+%   \item John S.~Townsend, \textit{A Modern Approach to Quantum Mechanics} (University
+%   Science Books, Herndon, VA, 2012).
+%
+%   \item Ramamurti Shankar, \textit{Principles of Quantum Mechanics} (Springer,
+%   New York, NY, 1994).
+%
+%   \item Steven E.~Koonin and Dawn C.~Meredith, \textit{Computational
+%   Physics: FORTRAN Version} (Addison-Wesley, Redwood City, CA, 1990).
+% \end{leftindentlist*}
+
+%% We will also continue to draw upon the textbook you have used in
+%% Computational Methods in Physics:
+%%
+%% \begin{leftindentlist*}{\baselineskip}
+%% \item
+%% Mark Newman, \textit{Computational Physics}, revised ed.\
+%% (CreateSpace, 2012).
+%% \end{leftindentlist*}
+%
+% Further more specialized readings for the projects may be taken from
+% textbooks, pedagogical papers in the \textit{American Journal of
+% Physics} (http://ojps.aip.org/ajp), original research papers, or
+% online resources.
+
+\syllabussection{Software}
+
+This course will be based on Python 3, the language you used in Computational
+Methods in Physics. We will also make use of some of the well-developed
+scientific libraries for Python: the numerical linear algebra library NumPy, the
+scientific library SciPy, and the plotting library matplotlib. You will need
+to have these installed on your laptop.
+
+Note: In practice, if you wish to write your code in Python 2.7, this will be permissible. There are certain features in Python 3 which we will often take for granted in this class (division of integers being a prime example) which you will be responsible for accounting for in your submitted code. Do so at your own risk! Further, one should always include the language version utilized for a project within the document header.
+
+\syllabussection{Projects}
+
+This course will be structured around projects, each of several weeks' duration.
+The life-cycle of a project will be as follows:
+
+\begin{leftindent}
+
+  (1)~Readings on the physical problem and any relevant numerical methods
+  \textbf{will be required}, with reading assessments as appropriate.  Since
+  the basic physical principles will typically have already been covered in
+  Quantum Mechanics~I or~II, the readings will focus on the specific problem at
+  hand and the computational details.
+
+  (2)~A guided discussion of the reading will provide opportunities for
+  clarification and questions.  This will be a seminar-style discussion~--- you
+  will have opportunities to present and explain portions of the reading to your
+  peers and/or raise questions on the parts which are still not clear to you.
+  Discussion will focus on putting this physical problem in context and on
+  planning an approach for carrying out the project.  Getting to the ``correct
+  answer'' is not the end goal, but just the start!  What \textit{insight} can
+  we gain about the physical system?  How does its behavior depend upon the
+  parameters of the problem?
+
+  An important step here will be reviewing or working out \textit{analytic}
+  solutions to test cases which we will use to benchmark our codes.  We will
+  also usually need to transform the mathematical formulation problem to a form
+  which is more amenable to numerical solution (\textit{e.g.}, transformation to
+  convenient units, change of variable).
+
+  (3)~You will continue to work on carrying out the project. Planning and coding
+  are the ``obvious'' parts.  But this is research we are doing.  Just as
+  important is \textit{testing and validation}~--- your code will not give the
+  correct answer the first time!  How do you know when you can finally believe
+  your results?  (Can we reproduce the analytical results we derived ahead of
+  time?)
+
+  Based on the success of the partner system in Computational Methods in
+  Physics, you will continue to work in loose collaboration with a partner, for
+  mutual support in planning, programming, and carrying out the physics studies.
+  A new partner will be assigned for each project.  This has been found to be
+  necessary both to keep the working relationship fresh and to ensure full
+  exchange of the lessons and ideas learned across the course of the semester.
+
+  (4)~You will turn in a  project report will consist of the code, results
+  (output and figures), and a report in the form of a paper exploring the
+  computational issues, validation procedure, and physical insights. Part of our
+  group discussions will be devoted to comparing our results, determining what
+  more might be needed in the way of validation and numerical or physical
+  exploration, and planning the contents of this paper.
+
+  You will be expected to develop code collaboratively. \textit{This will
+  require writing code which is structured sufficiently well to allow multiple
+  people to contribute at the same time.} However, you will write your project
+  reports separately, and \textit{your project reports will be separately
+  evaluated on the quality of work and understanding they communicate}.
+
+  \end{leftindent}
+
+\syllabussection{Grading}
+
+Grades will be assigned based on the following aspects:
+
+\begin{leftindentlist*}{\baselineskip}
+
+ \item \textbf{Reading Quizzes} (10\%) -- completion of required readings before
+ classes;
+
+ \item \textbf{Discussion/Participation} (15\%) -- active and engaged
+ particpation during in-class discussion and development time;
+
+ \item \textbf{Projects} (25\% each) -- project reports and code, with rubric
+ distributed later.
+
+\end{leftindentlist*}
+
+\syllabussection{Topics}
+
+%
+% \textit{Previous years' projects have included:}
+%
+% \begin{leftindentlist*}{\baselineskip}
+%
+%  \item Solution of the time-independent Schr\"odinger equation in one
+%  dimension (shooting method).  \textit{Test cases:} square well, harmonic oscillator.
+%  \textit{Application:} quartic (anharmonic) oscillator.
+%
+%  \item Solution of the time-independent Schr\"odinger equation~---
+%  %% boundary value problems in one dimension,
+%  matrix solution by representation in a basis or on a discrete mesh, variational
+%  methods;
+%  \textit{Exploration:}  double-well potentials
+%
+%  \item Realistic solution of time-independent Schr\"odinger equation
+%  with spherical symmetry.  \textit{Test case:} Coulomb (hydrogenic)
+%  problem. \textit{Applications:} nuclear Woods-Saxon potential, atomic
+%  screening potential for \isotope{Na}.
+%
+%  \item Solution of the two-electron problem in the Hartree approximation
+%  \textit{Test case:} \isotope{He} atom. \textit{Application:} \isotope{He}-like (two-electron) ions with $Z>2$.
+%
+%  \item Scattering phase shifts with spherical symmetry.
+%  \textit{Test case:} hard sphere.
+%  \textit{Application:} atomic scattering with the Lennard-Jones potential.
+% \end{leftindentlist*}
+%
+% \textit{However, we have considerable freedom to choose from a diverse range of topics.  For instance:}
+%
+% \begin{leftindentlist*}{\baselineskip}
+%   \item Solution of the time-dependent Schr\"odinger equation~--- direct
+%   solution (instabilities, leapfrog method, implicit methods), spectral methods
+%   (and the Fourier transform);
+%   \textit{Exploration:} scattering of wave packets off barriers and
+%   wells, resonance phenomena
+%
+%   \item Further studies in solution methods~--- configuration interaction
+%   calculations for indistinguishable particles, Quantum Monte Carlo methods,
+%   Schr\"odinger equation in momentum space (bound states and scattering)
+%
+%   \item Applications in atomic and nuclear physics~--- solution for
+%   $\isotope{He}$ wave functions and energies (variational or Hartree-Fock
+%   methods),
+%   %% screening potential in alkalai atoms,
+%   fine structure in $\isotope{Na}$ atoms (numerical
+%   integration), $\isotope{H}$ molecular ion, Thomas-Fermi model, vacuum
+%   polarization
+%
+%   \item Applications in condensed matter physics~--- exact diagonalization of
+%   quantum spin models (Heisenberg model), electrons in a periodic potential
+%   (band structure of $\isotope{Si}$)
+%
+%
+% \end{leftindentlist*}
+
+
+
+{\enlargethispage{20ex}\mbox{}\hfill{\scriptsize\today}}
+
+\end{document}

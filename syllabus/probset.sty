@@ -1,0 +1,86 @@
+% probset.sty -- macros for problem set handouts
+%
+% Mark A. Caprio
+% University of Notre Dame
+% 1/28/08 (mac): originated
+% 1/31/16 (mac): incorporate elements from computational methods macros (cmp.sty)
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{probset}[0000/00/00 v0.0 (M. A. Caprio)]
+\usepackage{alltt}  % for computer code environment
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% configuration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\renewcommand{\thefootnote}{\fnsymbol{footnote}} 	
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% generic problem set macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\separator}{
+  \vspace{-21pt}\par
+  \begin{center}
+  \rule{5in}{1pt}
+  \end{center}
+  \par
+  \vspace{-12pt}
+}
+
+\newcommand{\continued}{\vfill\hfill\textit{Continued...}}
+
+\newcommand{\points}[1]{\textit{[#1 points]}}
+
+\newenvironment{probcite}[1][3in]
+  {
+    \frenchspacing
+    \begin{list}{}{\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+                   \setlength{\leftmargin}{#1}\setlength{\rightmargin}{0pt}}
+    \item[]
+  }
+  {
+    \end{list}
+  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% worksheet construction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% sectioning
+\renewcommand{\section}{\@startsection{section}{2}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\bfseries}}
+\newcommand{\tsection}[1]{\textbf{#1}~~}
+
+% annotations
+\DeclareRobustCommand{\bookproblem}[1]{\textit{[{#1}]}}
+\DeclareRobustCommand{\query}[1]{\textbf{\textsf{#1}}}
+\DeclareRobustCommand{\filename}[1]{[Suggested filename: \mcmd{#1}]}
+
+% answer block
+\newcommand{\answerblockrulewidth}{1pt}  
+\DeclareRobustCommand{\answerblock}[2][\answerblockrulewidth]{\rule{#1}{#2}}
+
+% DEPRECATED: \blankblock
+% used in MMP Fall 2015
+% can be reimplemented in terms of \answerblock
+\DeclareRobustCommand{\blankblock}[1]{\rule{0pt}{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% code formatting construction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% code macros (adapted from SciDraw manual)
+
+% note: consider using \verb instead of \mcmd for most basic code quoting
+
+\DeclareRobustCommand{\mcmd}[1]{\textup{\texttt{#1}}}  
+%% \DeclareRobustCommand{\mlist}[1]{\{#1\}}
+\DeclareRobustCommand{\mvar}[1]{\textnormal{\ensuremath{#1}}}
+%%\DeclareRobustCommand{\mvarit}[1]{\textnormal{\ensuremath{\mathit{#1}}}}
+%% \DeclareRobustCommand{\mldots}{\mvar{\ldots}}
+\newenvironment{mcode}{\begin{leftindent}\begin{alltt}\vspace{6pt}}{\end{alltt}\vspace{6pt}\end{leftindent}}
