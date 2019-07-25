@@ -1,0 +1,43 @@
+% syllabus.sty -- defines commands for formatting syllabus
+%
+% Mark A. Caprio
+%
+% 1/11/16 (mac): based on code from mmp syllabus Fall 2015
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{syllabus}[0000/00/00 v0.0 (M. A. Caprio)]
+
+\newcommand{\syllabustitle}[1]{{\centerline{\sffamily\large\bfseries\slshape{#1}}}}
+\newcommand{\syllabussubtitle}[1]{{\centerline{\large{#1}}}}
+\newcommand{\syllabussection}[1]{{\sffamily\bfseries{#1}}}
+
+\newcommand{\syllabusseparator}{
+  \vspace{-21pt}\par
+  \begin{center}
+  \rule{5in}{2pt}
+  \end{center}
+  \par
+  \vspace{-12pt}
+}
+
+\newcommand{\syllabusseparatorpart}[1]{
+  \vspace{-21pt}\par
+  \begin{center}
+  \rule{5in}{2pt}
+\syllabustitle{#1}
+  \end{center}
+  \par
+  \vspace{-12pt}
+}
+
+\newcommand{\syllabuspart}[1]{
+  \vspace{-21pt}\par
+  \begin{center}
+%%  \rule{5in}{2pt}
+\syllabustitle{#1}
+  \end{center}
+  \par
+  \vspace{-12pt}
+}
+
+\newenvironment{syllabusquote}{\begin{leftindent}[2in]\footnotesize\it}{\end{leftindent}}
