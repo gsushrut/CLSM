@@ -261,13 +261,12 @@ def time_evolve(num_atoms=10,num_steps=10000,time_step=0.001,initial_temp=1.0,ou
         kinetic_energy_average[k],temperature[k] = calc_temp(velocity,box_width,ndim,num_atoms)
 
 
-        # periodic boundary conditions; if particle strays outside of the box, move it back from its new adjacent cell
+        ### periodic boundary conditions; if particle strays outside of the box, move it back from its new adjacent cell
 
-        for i in range(ndim):
-            outside_bounds = np.where(position[:,i] > 0.5)
-            position[outside_bounds,i]=  position[outside_bounds,i] - 1.0
-            outside_bounds = np.where(position[:,i] < -0.5)
-            position[outside_bounds,i]= position[outside_bounds,i] + 1.0
+        outside_bounds = np.where(position[:,:] > 0.5)
+        position[outside_bounds]=  position[outside_bounds] - 1.0
+        outside_bounds = np.where(position[:,:] < -0.5)
+        position[outside_bounds]= position[outside_bounds] + 1.0
 
         #print out update
         if(k%output_step==0):
@@ -285,7 +284,7 @@ if __name__ == "main":
     # makes some plots, haven't had time to clean up yet
 
     box = 10
-    n_atoms = 80
+    n_atoms = 20
     steps = 1000
 
     plot_frequency = 100
@@ -327,7 +326,7 @@ if __name__ == "main":
     ax[1,0].set_xlabel("t [{0:d} steps]".format(plot_frequency))
     ax[1,1].set_xlabel("t [{0:d} steps]".format(plot_frequency))
     plt.show()
-    fig.savefig("observables_natoms_{0:d}.pdf".format(n_atoms),bbox_inches='tight')
+    # fig.savefig("observables_natoms_{0:d}.pdf".format(n_atoms),bbox_inches='tight')
 
     speeds = vel[:,:,0]**2 + vel[:,:,1]**2
     speeds = np.sqrt(speeds)
