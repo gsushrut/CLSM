@@ -1,4 +1,4 @@
-%Checked OK on 20-Apr-2016
+%-----CLSM---PROJECT-4-------%
 %Kills a network by probabilistic Watts' model with a given gamma, epslilon,
 %threshold fraction, and number of times.
 %Records population and critical times.
