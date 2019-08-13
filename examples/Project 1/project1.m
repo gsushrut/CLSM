@@ -4,6 +4,9 @@
 %2. TRANSFORMING THE RANDOM VARIABLES ACCORDING TO A GIVEN PDF
 %3. ADDING RANDOM NUMBERS AND CENTRAL LIMIT THEOREM
 %4. OPEN ENDED PROBLEM: MULTIPLYING/SQUARING RANDOM NUMBERS??
+%ANS: Multiplying gives -log(x) and squaring gives 0.5/sqrt(x) distribution.
+%histogram(rand(500000,1).*rand(500000,1),1000)
+%histogram(rand(500000,1).^2)
 
 
 
